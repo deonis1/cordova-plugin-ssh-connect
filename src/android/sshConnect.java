@@ -45,13 +45,12 @@ public class sshConnect extends CordovaPlugin {
         try {
     
             if (action.equals("connect")) {
-
                 String user = args.getString(0);
                 String password = args.getString(1);
                 String host = args.getString(2);
                 int port = Integer.parseInt(args.getString(3));
 
-                this.thr = new Thread(new Runnable() {
+                this.thr = CordovaInterface.getThreadPool().execute(new Runnable() {
                     public void run() {
                         connect(user, password, host, port, callbackContext);
                     }
@@ -63,7 +62,8 @@ public class sshConnect extends CordovaPlugin {
     
             if (action.equals("executeCommand")) {
                 String command = args.getString(0);
-                this.executeCommand(command, callbackContext);
+                		this.executeCommand(command, callbackContext);
+			}
                 return true;
             }
     
