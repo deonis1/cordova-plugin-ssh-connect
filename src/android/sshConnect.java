@@ -1,6 +1,6 @@
 /*
  * Cordova SSH Connect Plugin for Android.
- * Author: Jose Andrés Pérez Arévalo <joseaperez27@outlook.com> (https://github.com/JosePerez27)
+ * Authors: Jose Andrés Pérez Arévalo, Denis Spasyuk <joseaperez27@outlook.com>, <denis.spasyuk@gmail.com>
  * Date: Thu, 05 Sep 2019 11:18:07 -0500
  */
 
@@ -45,14 +45,15 @@ public class sshConnect extends CordovaPlugin {
         try {
     
             if (action.equals("connect")) {
+
                 String user = args.getString(0);
                 String password = args.getString(1);
                 String host = args.getString(2);
                 int port = Integer.parseInt(args.getString(3));
-
-                this.thr = CordovaInterface.getThreadPool().execute(new Runnable() {
+                String key = args.getString(4);
+                this.thr = new Thread(new Runnable() {
                     public void run() {
-                        connect(user, password, host, port, callbackContext);
+                        connect(user, password, host, port, key, callbackContext);
                     }
                 });
 
@@ -62,8 +63,7 @@ public class sshConnect extends CordovaPlugin {
     
             if (action.equals("executeCommand")) {
                 String command = args.getString(0);
-                		this.executeCommand(command, callbackContext);
-			}
+                this.executeCommand(command, callbackContext);
                 return true;
             }
     
@@ -82,15 +82,23 @@ public class sshConnect extends CordovaPlugin {
         }
     }
 
-    private static final void connect(String user, String password, String host, int port, CallbackContext callbackContext) {
+    private static final void connect(String user, String password, String host, int port, String key, CallbackContext callbackContext) {
+        
         try {
 
             if (session == null || !session.isConnected()) {
 
                 JSch jsch = new JSch();
-                session = jsch.getSession(user, host, port);
-                session.setPassword(password);
-        
+                session = jsch.getSession(user, host, port);  
+                if (key != null) {
+                   jsch.addIdentity(key);
+                }else{
+                    if (password != null){
+                        session.setPassword(password);
+                    }else{
+                        callbackContext.sendPluginResult(new PluginResult(PluginResult.Status.ERROR, "Password not found"));   
+                    }
+                }
                 // Parameter for not validating connection key
                 session.setConfig("StrictHostKeyChecking", "no");
                 session.connect();
@@ -106,8 +114,9 @@ public class sshConnect extends CordovaPlugin {
     }
 
     private final void executeCommand(String command, CallbackContext callbackContext) {
-        try {
 
+        try {
+           
             if (session != null && session.isConnected()) {
 
                 // Open a SSH channel
