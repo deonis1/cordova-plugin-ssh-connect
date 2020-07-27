@@ -1,7 +1,7 @@
 var exec = require('cordova/exec');
 
-exports.connect = function (user, password, host, port, success, error) {
-    exec(success, error, 'sshConnect', 'connect', [user, password, host, port]);
+exports.connect = function (user, password, host, port, key, success, error) {
+    exec(success, error, 'sshConnect', 'connect', [user, password, host, port, key]);
 };
 
 exports.executeCommand = function (command, success, error) {
