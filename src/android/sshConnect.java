@@ -1,6 +1,6 @@
 /*
  * Cordova SSH Connect Plugin for Android.
- * Authors: Jose Andrés Pérez Arévalo, Denis Spasyuk <joseaperez27@outlook.com>, <denis.spasyuk@gmail.com>
+ * Authors: Jose Andrés Pérez Arévalo, Denis Spasyuk <joseaperez27@outlook.com>, <denis.spasyuk@gmail.com> 
  * Date: Thu, 05 Sep 2019 11:18:07 -0500
  */
 
@@ -83,17 +83,19 @@ public class sshConnect extends CordovaPlugin {
     }
 
     private static final void connect(String user, String password, String host, int port, String key, CallbackContext callbackContext) {
-        
+         
         try {
 
             if (session == null || !session.isConnected()) {
 
                 JSch jsch = new JSch();
                 session = jsch.getSession(user, host, port);  
-                if (key != null) {
-                   jsch.addIdentity(key);
+                
+                if (key != null && !key.trim().isEmpty()) {
+                    jsch.addIdentity(key);
+
                 }else{
-                    if (password != null){
+                    if (password != null && !password.trim().isEmpty()){
                         session.setPassword(password);
                     }else{
                         callbackContext.sendPluginResult(new PluginResult(PluginResult.Status.ERROR, "Password not found"));   
