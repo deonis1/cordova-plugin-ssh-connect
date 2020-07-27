@@ -11,7 +11,7 @@ SSH Plugin for Cordova to make connections and execute remote commands with the 
 ## Install
 
 ```sh
-cordova plugin add cordova-plugin-ssh-connect
+cordova plugin add cordova-plugin-ssh-connect-key
 ```
 
 ## Methods
@@ -175,8 +175,8 @@ There is an example to be able to use the methods in Ionic:
 
 ## Licence
 
-View the [LICENCE FILE](https://github.com/JosePerez27/cordova-plugin-ssh-connect/blob/master/LICENCE).
+View the [LICENCE FILE](https://github.com/JosePerez27/cordova-plugin-ssh-connect-key/blob/master/LICENCE).
 
 ## Issues
 
-Report at [GitHub Issues](https://github.com/JosePerez27/cordova-plugin-ssh-connect/issues).
+Report at [GitHub Issues](https://github.com/JosePerez27/cordova-plugin-ssh-connect-key/issues).
