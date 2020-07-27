@@ -1,7 +1,3 @@
-[![Licence](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
-[![npm](https://img.shields.io/npm/dt/cordova-plugin-ssh-connect.svg?label=npm%20downloads)](https://www.npmjs.com/package/cordova-plugin-ssh-connect)
-[![npm](https://img.shields.io/npm/v/cordova-plugin-ssh-connect)](https://www.npmjs.com/package/cordova-plugin-ssh-connect)
-
 # SSH Connect
 
 SSH Plugin for Cordova to make connections and execute remote commands with the [JSch](http://www.jcraft.com/jsch/) library for Android.
@@ -29,7 +25,7 @@ cordova plugin add cordova-plugin-ssh-connect
 ### Connect Method
 
 ```typescript
-sshConnect.connect('user', 'password', 'host', port, function(success) {...}, function(failure) {...})
+sshConnect.connect('user', 'password', 'host', port, key, function(success) {...}, function(failure) {...})
 ```
 **Params**
 
@@ -37,6 +33,7 @@ sshConnect.connect('user', 'password', 'host', port, function(success) {...}, fu
 * `password` - Host password.  
 * `host` - Hostname or IP address.  
 * `port` - SSH port number.  
+* `key`  -  Private ssh key.  
 
 **Success Response**
 
@@ -93,7 +90,7 @@ Now here is an example to be able to use the methods:
     alert(error);
   }
 
-  window.cordova.plugins.sshConnect.connect('MyUser', 'MyPassword', '0.0.0.0', 22,
+  window.cordova.plugins.sshConnect.connect('MyUser', 'MyPassword', '0.0.0.0', 22, key,
     function(resp) {
       if (resp) {
         window.cordova.plugins.sshConnect.executeCommand('ls -l', success, failure);
@@ -174,7 +171,7 @@ There is an example to be able to use the methods in Ionic:
 
 ## Author
 
-* Jose Andrés Pérez Arévalo, (https://github.com/JosePerez27).
+* Jose Andrés Pérez Arévalo, Denis Spasyuk.
 
 ## Licence
 
